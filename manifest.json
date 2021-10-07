@@ -1,23 +1,18 @@
 {
-    "manifest_version": 2,
-    "name": "ましなもみじ",
-    "version": "1.0.2",
-    "description": "広島大学の My もみじと一緒に使うとおいしい拡張です。<公式ではありません>",
-    "minimum_chrome_version": "29",
-    "icons": {
-        "50": "icons/icon50.png"
-    },
-    "content_scripts": [
-        {
-            "matches": [
-                "https://www.momiji.hiroshima-u.ac.jp/campusweb/campussquare.do**"
-            ],
-            "js": [
-                "ical.deps.min.js",
-                "ics.min.js",
-                "download.js",
-                "main.js"
-            ]
-        }
-    ]
+  "manifest_version": 2,
+  "name": "ましなもみじ",
+  "version": "1.0.2",
+  "description": "広島大学の My もみじと一緒に使うとおいしい拡張です。<公式ではありません>",
+  "minimum_chrome_version": "29",
+  "icons": {
+    "50": "icons/icon50.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.momiji.hiroshima-u.ac.jp/campusweb/campussquare.do**"
+      ],
+      "js": ["ical.deps.min.js", "ics.min.js", "download.js", "main.js"]
+    }
+  ]
 }
