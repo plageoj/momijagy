@@ -1,6 +1,8 @@
-export const download = (jigenRawData) => {
+export const download = (jigenRawData: HTMLTableCellElement[]) => {
   const cal = ics();
   const yearContainer = document.querySelector('td[align="center"] b');
+
+  if (!yearContainer) return;
 
   const button = document.createElement('button');
   button.style.marginLeft = '1ex';
@@ -10,36 +12,40 @@ export const download = (jigenRawData) => {
   const addEvent = () => {
     button.disabled = true;
     button.innerText = 'ダウンロード準備中…';
-    const year = parseInt(yearContainer.textContent, 10);
-    const jigenData = [];
-    for (let i = 1; i < 8; i++) {
-      jigenData.push(jigenRawData.item(i).textContent);
-    }
+    const year = Number(yearContainer.textContent);
+    const jigenData = jigenRawData.map((elm) => elm.textContent);
     const dates = jigenData.map((value) => {
       const dt = value
-        .replace(/[^0-9]+/g, '/')
+        ?.replace(/[^0-9]+/g, '/')
         .split('/')
         .map((str: string) => Number(str));
+      if (!dt) throw new Error('日付情報が取得できませんでした!');
       return +new Date(year, dt[1] - 1, dt[2]);
     });
 
-    const classes = document.querySelectorAll('.kyuko-kyukohoko td table');
-    for (let i = 0; i < classes.length; i++) {
-      const classList = classes.item(i).parentElement.classList;
+    const classes = Array.from(
+      document.querySelectorAll('.kyuko-kyukohoko td table'),
+    ) as HTMLTableElement[];
+    for (const [i, classItem] of classes.entries()) {
+      const classList = classItem.parentElement?.classList;
       if (
-        !classList.contains('kyuko-kaiko') &&
-        !classList.contains('kyuko-hoko') &&
-        !classList.contains('kyuko-multi-henko') &&
-        !classList.contains('kyuko-part-kyuko') &&
-        !classList.contains('kyuko-part-hoko')
+        !classList ||
+        (!classList.contains('kyuko-kaiko') &&
+          !classList.contains('kyuko-hoko') &&
+          !classList.contains('kyuko-multi-henko') &&
+          !classList.contains('kyuko-part-kyuko') &&
+          !classList.contains('kyuko-part-hoko'))
       )
         continue;
-      const classDetail = classes.item(i).querySelectorAll('td');
+      const classDetail = classItem.querySelectorAll('td');
       const evinfo = classDetail[0].innerText.split('\n');
       const time = classDetail[1].textContent
-        .replace(/[^0-9,]+/g, '')
+        ?.replace(/[^0-9,]+/g, '')
         .split(',')
-        .map((val) => parseInt(val, 10) - 1);
+        .map((val) => Number(val) - 1);
+
+      if (!time) throw new Error('時限情報が取得できませんでした!');
+
       const jigen = [
         [8.75, 9.5],
         [9.5, 10.25],
@@ -58,12 +64,16 @@ export const download = (jigenRawData) => {
         `${evinfo[0]} - ${evinfo[2]}`,
         evinfo[1],
         new Date(dates[i % 7] + 3600000 * jigen[time[0]][0]).toISOString(),
-        new Date(dates[i % 7] + 3600000 * jigen[time.pop()][1]).toISOString(),
+        new Date(
+          dates[i % 7] + 3600000 * jigen[time.pop() ?? time[0]][1],
+        ).toISOString(),
       );
     }
     sessionStorage.setItem('evt', JSON.stringify(cal.events()));
 
-    document.querySelector('td[align="right"] a+a').click();
+    (
+      document.querySelector('td[align="right"] a+a') as HTMLAnchorElement
+    ).click();
   };
 
   const evs = sessionStorage.getItem('evt');

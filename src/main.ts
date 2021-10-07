@@ -1,14 +1,21 @@
 import { download } from './download';
 
-const jigenRawData = document.getElementsByClassName('kyuko-date-jigen');
+const jigenRawData = Array.from(
+  document.getElementsByClassName('kyuko-date-jigen'),
+) as HTMLTableCellElement[];
 if (jigenRawData.length) download(jigenRawData);
 
-const frame = document.getElementsByName('topmenu')[0];
-frame.addEventListener('load', () => {
-  frame.contentDocument.getElementById(
-    'timeout',
-  ).parentElement.parentElement.innerText = 'タイムアウト抑制中';
+const frame = document.getElementsByName('topmenu')[0] as
+  | HTMLIFrameElement // Actually HTMLFrameElement but to avoid deprecated warnings
+  | undefined;
+frame?.addEventListener('load', () => {
+  if (!frame) return;
+  const span = frame.contentDocument?.getElementById('timeout')
+    ?.parentElement as HTMLSpanElement;
+  span.innerText = 'タイムアウト抑制中';
+  span.style.fontSize = '';
+
   setTimeout(() => {
-    frame.contentWindow.location.reload();
+    frame.contentWindow?.location.reload();
   }, 1700000);
 });
