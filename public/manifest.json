@@ -7,6 +7,13 @@
   "icons": {
     "50": "icons/icon50.png"
   },
+  "permissions": [
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.momiji.hiroshima-u.ac.jp/campusweb/campussquare.do**"
+  ],
   "content_scripts": [
     {
       "matches": [
@@ -20,5 +27,8 @@
       ],
       "all_frames": true
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }
