@@ -1,7 +1,12 @@
 chrome.windows.onCreated.addListener(async (win) => {
   if (win.id && win.type === 'popup') {
     const windowId = win.id;
-    const tabs = await chrome.tabs.query({ windowId });
+    const tabs = await chrome.tabs.query({
+      windowId,
+      url: '*://www.momiji.hiroshima-u.ac.jp/*',
+    });
+
+    if (!tabs.length) return;
 
     const parent = (await chrome.windows.getAll()).find(
       ({ type }) => type === 'normal',
