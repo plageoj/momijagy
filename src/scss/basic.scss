@@ -1,0 +1,18 @@
+a[href],
+a[onclick] {
+    text-decoration: none;
+    color: darkblue;
+
+    &:hover {
+        background: unset;
+        color: midnightblue;
+    }
+
+    &:active {
+        color: blueviolet;
+    }
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    cursor: pointer;
+}
