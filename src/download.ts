@@ -1,7 +1,10 @@
-export const download = (jigenRawData: HTMLTableCellElement[]) => {
-  const cal = ics();
-  const yearContainer = document.querySelector('td[align="center"] b');
+import { Component, Event, Time } from 'ical.js';
 
+export const download = (jigenRawData: HTMLTableCellElement[]): void => {
+  const eventString = sessionStorage.getItem('evt');
+  const events = new Component(eventString || 'vevent');
+
+  const yearContainer = document.querySelector('td[align="center"] b');
   if (!yearContainer) return;
 
   const button = document.createElement('button');
@@ -59,37 +62,40 @@ export const download = (jigenRawData: HTMLTableCellElement[]) => {
         [17.0333333333, 17.8333333333],
       ];
 
-      cal.addEvent(
-        evinfo[4],
-        `${evinfo[0]} - ${evinfo[2]}`,
-        evinfo[1],
-        new Date(dates[i % 7] + 3600000 * jigen[time[0]][0]).toISOString(),
-        new Date(
-          dates[i % 7] + 3600000 * jigen[time.pop() ?? time[0]][1],
-        ).toISOString(),
+      const event = new Event(events);
+      event.startDate = Time.fromJSDate(
+        new Date(dates[i % 7] + 3600000 * jigen[time[0]][0]),
+        false,
       );
+      event.endDate = Time.fromJSDate(
+        new Date(dates[i % 7] + 3600000 * jigen[time.pop() ?? time[0]][1]),
+        false,
+      );
+      event.summary = evinfo[4];
+      event.location = evinfo[1];
+      event.description = `${evinfo[0].trim()} - ${evinfo[2].trim()}`;
     }
-    sessionStorage.setItem('evt', JSON.stringify(cal.events()));
+    sessionStorage.setItem('evt', events.toString());
 
     (
       document.querySelector('td[align="right"] a+a') as HTMLAnchorElement
     ).click();
   };
 
-  const evs = sessionStorage.getItem('evt');
-  if (evs) {
-    cal.setEvents(JSON.parse(evs));
-  }
-
   yearContainer.appendChild(button);
 
-  if (cal.events().length) {
+  if (eventString) {
     if (document.getElementsByClassName('kyuko-kaiko').length === 1) {
       button.innerText = 'ダウンロード';
       sessionStorage.removeItem('evt');
       button.onclick = (e) => {
         e.preventDefault();
-        cal.download('momiji_calendar');
+        const comp = new Component([
+          'vcalendar',
+          [['version', {}, 'text', '2.0']],
+          [],
+        ]);
+        comp.addSubcomponent(events);
       };
       return;
     } else {
@@ -100,7 +106,6 @@ export const download = (jigenRawData: HTMLTableCellElement[]) => {
   button.onclick = (event) => {
     event.preventDefault();
     sessionStorage.removeItem('evt');
-    cal.setEvents([]);
     addEvent();
   };
 };

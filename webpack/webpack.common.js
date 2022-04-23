@@ -11,8 +11,9 @@ module.exports = {
     main: path.join(__dirname, srcDir + 'main.ts'),
   },
   output: {
-    path: path.join(__dirname, '../dist/js'),
+    path: path.join(__dirname, '../dist'),
     filename: '[name].js',
+    clean: true,
   },
   optimization: {
     // splitChunks: {
@@ -34,7 +35,7 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: '.', to: '../', context: 'public' }],
+      patterns: [{ from: '.', to: '.', context: 'public' }],
     }),
   ],
 };

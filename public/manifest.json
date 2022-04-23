@@ -12,7 +12,9 @@
       "matches": [
         "https://www.momiji.hiroshima-u.ac.jp/campusweb/campussquare.do**"
       ],
-      "js": ["ical.deps.min.js", "ics.min.js", "download.js", "main.js"]
+      "js": [
+        "main.js"
+      ]
     }
   ]
 }
