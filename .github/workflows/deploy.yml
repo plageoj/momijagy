@@ -23,9 +23,10 @@ jobs:
         with:
           extensionDir: dist
           zipFilePath: momijagy.zip
-      - uses: mnao305/chrome-extension-upload@2.2.0
+      - uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          file-path: momijagy.zip
-          extension-id: bngbbjmfooocodklnppanoopdddpfloh
-          client-id: ${{ secrets.CLIENT_ID }}
-          refresh-token: ${{ secrets.REFRESH_TOKEN }}
+          zipFilePath: momijagy.zip
+          extensionId: bngbbjmfooocodklnppanoopdddpfloh
+          apiClientId: ${{ secrets.CLIENT_ID }}
+          apiClientSecret: ${{ secrets.CLIENT_SECRET }}
+          apiRefreshToken: ${{ secrets.REFRESH_TOKEN }}
