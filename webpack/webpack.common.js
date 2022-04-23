@@ -1,32 +1,36 @@
-const webpack = require('webpack');
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const srcDir = '../src/';
 
 module.exports = {
   entry: {
-    // popup: path.join(__dirname, srcDir + 'popup.ts'),
-    // options: path.join(__dirname, srcDir + 'options.ts'),
-    // background: path.join(__dirname, srcDir + 'background.ts'),
-    main: path.join(__dirname, srcDir + 'main.ts'),
+    style: path.join(__dirname, srcDir + 'scss/style.scss'),
+    main: path.join(__dirname, srcDir + 'ts/main.ts'),
   },
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name].js',
     clean: true,
   },
-  optimization: {
-    // splitChunks: {
-    //     name: 'vendor',
-    //     chunks: "initial"
-    // }
-  },
+  optimization: {},
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(css|scss|sass)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true, importLoaders: 2 },
+          },
+          { loader: 'sass-loader', options: { sourceMap: true } },
+        ],
       },
     ],
   },
@@ -36,6 +40,9 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [{ from: '.', to: '.', context: 'public' }],
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
     }),
   ],
 };

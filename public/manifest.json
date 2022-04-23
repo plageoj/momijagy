@@ -14,7 +14,11 @@
       ],
       "js": [
         "main.js"
-      ]
+      ],
+      "css": [
+        "style.css"
+      ],
+      "all_frames": true
     }
   ]
 }
