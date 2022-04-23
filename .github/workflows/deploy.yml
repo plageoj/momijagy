@@ -16,7 +16,9 @@ jobs:
         with:
           cache: npm
       - name: Build extension
-        run: npm run build
+        run: |
+          npm ci
+          npm run build
       - uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
           extensionDir: dist
