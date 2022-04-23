@@ -1,0 +1,29 @@
+name: Deploy to Chrome Web Store
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+      - name: Build extension
+        run: npm run build
+      - uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+        with:
+          extensionDir: dist
+          zipFilePath: momijagy.zip
+      - uses: mnao305/chrome-extension-upload@2.2.0
+        with:
+          file-path: momijagy.zip
+          extension-id: bngbbjmfooocodklnppanoopdddpfloh
+          client-id: ${{ secrets.CLIENT_ID }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
