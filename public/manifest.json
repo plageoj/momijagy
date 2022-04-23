@@ -3,7 +3,7 @@
   "name": "ましなもみじ",
   "version": "1.0.3",
   "description": "広島大学の My もみじと一緒に使うとおいしい拡張です。<公式ではありません>",
-  "minimum_chrome_version": "85",
+  "minimum_chrome_version": "88",
   "icons": {
     "50": "icons/icon50.png"
   },
