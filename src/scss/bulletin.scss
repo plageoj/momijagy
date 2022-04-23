@@ -1,0 +1,49 @@
+// 掲示板
+
+#keijiReferForm {
+    // 未読表記を出さない
+    @for $i from 1 through 500 {
+        #midoku_#{$i} {
+            display: none;
+        }
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    td {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.1rem;
+
+        a,
+        b {
+            flex-grow: 1;
+        }
+
+        a {
+            padding: 0.1rem 0 0.1rem 1.2rem;
+            transition: background-color ease 0.2s;
+            text-indent: -1rem;
+        }
+
+        a:hover {
+            background-color: whitesmoke;
+        }
+
+        b {
+            margin: 0.5rem 0 0.5rem 0.5rem;
+        }
+
+        input[type="button"] {
+            max-height: 1.5rem;
+            padding: 0 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        img {
+            display: none;
+        }
+    }
+}

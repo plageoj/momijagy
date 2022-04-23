@@ -3,5 +3,8 @@
   "extends": ["standard-typescript-prettier"],
   "parserOptions": {
     "project": "./tsconfig.json"
-  }
+  },
+  "ignorePatterns": [
+    "webpack/*"
+  ]
 }
