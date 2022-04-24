@@ -1,46 +1,33 @@
-chrome.windows.onCreated.addListener(async (win) => {
-  if (win.id && win.type === 'popup') {
-    const windowId = win.id;
-    const tabs = await chrome.tabs.query({
-      windowId,
-      url: '*://www.momiji.hiroshima-u.ac.jp/*',
-    });
+chrome.tabs.onUpdated.addListener(async (id, change, tab) => {
+  const win = await chrome.windows.get(tab.windowId);
+  if (
+    change.status !== 'complete' ||
+    !tab.url?.startsWith('https://www.momiji.hiroshima-u.ac.jp/campusweb/') ||
+    win.type !== 'popup'
+  )
+    return;
 
-    if (!tabs.length) return;
+  const momijiTabs = await chrome.tabs.query({
+    url: 'https://www.momiji.hiroshima-u.ac.jp/campusweb/*',
+    windowType: 'normal',
+  });
+  const parent = momijiTabs.pop();
 
-    const parent = (await chrome.windows.getAll()).find(
-      ({ type }) => type === 'normal',
-    );
+  if (!parent) return;
 
-    const openerIndex = await (async () => {
-      const momijiTabs = await chrome.tabs.query({
-        url: '*://www.momiji.hiroshima-u.ac.jp/*',
-      });
-      if (!momijiTabs) return -1;
-      const opener = momijiTabs.pop();
-      if (!opener) return -1;
-      return opener.index + 1;
-    })();
+  chrome.tabs.move(id, {
+    windowId: parent.windowId,
+    index: parent.index + 1,
+  });
 
-    if (!parent || !parent.id) return;
+  chrome.tabs.update(id, {
+    active: true,
+  });
 
-    for (const tab of tabs) {
-      if (!tab.id) continue;
-      chrome.tabs.move(tab.id, {
-        windowId: parent.id,
-        index: openerIndex,
-      });
-
-      chrome.tabs.update(tab.id, {
-        active: true,
-      });
-
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id, allFrames: true },
-        func: () => {
-          window.name = document.title;
-        },
-      });
-    }
-  }
+  chrome.scripting.executeScript({
+    target: { tabId: id, allFrames: true },
+    func: () => {
+      window.name = document.title;
+    },
+  });
 });
