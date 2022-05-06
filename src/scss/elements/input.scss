@@ -1,0 +1,39 @@
+%button {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.3rem;
+
+    color: whitesmoke;
+    background-color: #3c5795;
+    box-shadow: #d5d5d5 1px 1px 2px 0px;
+    border: 1px #bdd6ff;
+    border-style: none solid solid none;
+    background-size: 200% auto;
+    transition: background-color ease 0.5s;
+
+    &:hover {
+        background-color: #4b6cb7;
+    }
+
+    &:active {
+        border-style: solid none none solid;
+    }
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    @extend %button;
+    padding: 0.2rem 1rem;
+}
+
+input[type="text"],
+select {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: none;
+    box-shadow: #333 0 0 2px inset, #999 1px 1px 1px;
+    border-radius: 0.3rem;
+    background: #f9f9f9;
+}

@@ -1,6 +1,6 @@
-// 掲示板
-
-#keijiReferForm {
+// メインページ掲示板
+#keijiReferForm[name="keijiReferForm"],
+#keijiReferForm[name="referForm"] {
     // 未読表記を出さない
     @for $i from 1 through 500 {
         #midoku_#{$i} {
@@ -46,4 +46,49 @@
             display: none;
         }
     }
+}
+
+// 掲示板参照 ジャンル一覧
+#keijiReferForm[name="inputForm"],
+// 掲示板検索
+#keijiSearchForm[name="keijiSearchForm"] {
+    & > b,
+    & > p {
+        display: none;
+    }
+
+    table {
+        width: 45em;
+        margin: auto;
+        max-width: 100%;
+    }
+
+    th,
+    td {
+        line-height: 1.5rem;
+    }
+
+    td:first-child {
+        padding-left: 1rem;
+    }
+}
+// 掲示情報検索
+input[name="_eventId_search"] {
+    padding: 0 2rem;
+    margin: auto;
+    height: 44px;
+}
+// 休講・補講・教室変更
+#portal-data {
+    & > table {
+        width: 100%;
+    }
+    .portlet-kyukohoko-later-link a {
+        @extend %button;
+        line-height: 2rem;
+    }
+}
+// 学長メッセージ
+h1.portalkeiji table {
+    width: 100%;
 }
