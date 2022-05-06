@@ -1,21 +1,31 @@
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
-    cursor: pointer;
+%button {
     display: block;
-    padding: 0.2rem 1rem;
-    box-shadow: #ccc 1px 1px 1px;
+    text-align: center;
+    cursor: pointer;
     border-radius: 0.3rem;
-    border-width: 1px;
+
+    color: whitesmoke;
+    background-color: #3c5795;
+    box-shadow: #d5d5d5 1px 1px 2px 0px;
+    border: 1px #bdd6ff;
+    border-style: none solid solid none;
+    background-size: 200% auto;
+    transition: background-color ease 0.5s;
 
     &:hover {
-        background-color: #efefef;
+        background-color: #4b6cb7;
     }
 
     &:active {
-        transform: translate(1px, 1px);
-        box-shadow: none;
+        border-style: solid none none solid;
     }
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    @extend %button;
+    padding: 0.2rem 1rem;
 }
 
 input[type="text"],

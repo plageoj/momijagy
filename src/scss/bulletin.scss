@@ -78,3 +78,17 @@ input[name="_eventId_search"] {
     margin: auto;
     height: 44px;
 }
+// 休講・補講・教室変更
+#portal-data {
+    & > table {
+        width: 100%;
+    }
+    .portlet-kyukohoko-later-link a {
+        @extend %button;
+        line-height: 2rem;
+    }
+}
+// 学長メッセージ
+h1.portalkeiji table {
+    width: 100%;
+}
