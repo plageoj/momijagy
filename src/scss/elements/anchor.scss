@@ -11,8 +11,8 @@ a[onclick] {
     &:active {
         color: blueviolet;
     }
-}
 
-input[type="button"], input[type="submit"], input[type="reset"] {
-    cursor: pointer;
+    &:visited {
+        color: darkmagenta;
+    }
 }

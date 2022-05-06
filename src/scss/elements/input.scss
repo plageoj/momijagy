@@ -1,0 +1,29 @@
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    cursor: pointer;
+    display: block;
+    padding: 0.2rem 1rem;
+    box-shadow: #ccc 1px 1px 1px;
+    border-radius: 0.3rem;
+    border-width: 1px;
+
+    &:hover {
+        background-color: #efefef;
+    }
+
+    &:active {
+        transform: translate(1px, 1px);
+        box-shadow: none;
+    }
+}
+
+input[type="text"],
+select {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: none;
+    box-shadow: #333 0 0 2px inset, #999 1px 1px 1px;
+    border-radius: 0.3rem;
+    background: #f9f9f9;
+}

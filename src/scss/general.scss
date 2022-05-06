@@ -1,0 +1,18 @@
+// タイトルバーの虫眼鏡画像を消す
+body>table.title {
+    background-image: none;
+
+    td {
+        font-weight: bold;
+        text-indent: 1rem;
+    }
+
+    img {
+        display: none;
+    }
+}
+
+// 権利表記を消す
+.title-footer {
+    display: none;
+}
