@@ -22,10 +22,10 @@ jobs:
       - uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
           extensionDir: dist
-          zipFilePath: momijagy.zip
+          zipFilePath: mashina-momiji.zip
       - uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: momijagy.zip
+          zipFilePath: mashina-momiji.zip
           extensionId: bngbbjmfooocodklnppanoopdddpfloh
           apiClientId: ${{ secrets.CLIENT_ID }}
           apiClientSecret: ${{ secrets.CLIENT_SECRET }}
