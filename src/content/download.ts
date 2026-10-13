@@ -1,8 +1,8 @@
-import { Component, Event, Time } from 'ical.js';
+import ICAL from 'ical.js';
 
 export const download = (jigenRawData: HTMLTableCellElement[]): void => {
   const eventString = sessionStorage.getItem('evt');
-  const events = new Component(eventString || 'vevent');
+  const events = new ICAL.Component(eventString || 'vevent');
 
   const yearContainer = document.querySelector('td[align="center"] b');
   if (!yearContainer) return;
@@ -27,8 +27,8 @@ export const download = (jigenRawData: HTMLTableCellElement[]): void => {
     });
 
     const classes = Array.from(
-      document.querySelectorAll('.kyuko-kyukohoko td table'),
-    ) as HTMLTableElement[];
+      document.querySelectorAll<HTMLTableElement>('.kyuko-kyukohoko td table'),
+    );
     for (const [i, classItem] of classes.entries()) {
       const classList = classItem.parentElement?.classList;
       if (
@@ -62,12 +62,12 @@ export const download = (jigenRawData: HTMLTableCellElement[]): void => {
         [17.0333333333, 17.8333333333],
       ];
 
-      const event = new Event(events);
-      event.startDate = Time.fromJSDate(
+      const event = new ICAL.Event(events);
+      event.startDate = ICAL.Time.fromJSDate(
         new Date(dates[i % 7] + 3600000 * jigen[time[0]][0]),
         false,
       );
-      event.endDate = Time.fromJSDate(
+      event.endDate = ICAL.Time.fromJSDate(
         new Date(dates[i % 7] + 3600000 * jigen[time.pop() ?? time[0]][1]),
         false,
       );
@@ -90,7 +90,7 @@ export const download = (jigenRawData: HTMLTableCellElement[]): void => {
       sessionStorage.removeItem('evt');
       button.onclick = (e) => {
         e.preventDefault();
-        const comp = new Component([
+        const comp = new ICAL.Component([
           'vcalendar',
           [['version', {}, 'text', '2.0']],
           [],

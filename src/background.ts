@@ -15,16 +15,16 @@ chrome.tabs.onUpdated.addListener(async (id, change, tab) => {
 
   if (!parent) return;
 
-  chrome.tabs.move(id, {
+  void chrome.tabs.move(id, {
     windowId: parent.windowId,
     index: parent.index + 1,
   });
 
-  chrome.tabs.update(id, {
+  void chrome.tabs.update(id, {
     active: true,
   });
 
-  chrome.scripting.executeScript({
+  void chrome.scripting.executeScript({
     target: { tabId: id, allFrames: true },
     func: () => {
       window.name = document.title;

@@ -1,4 +1,4 @@
-# ましなもみじ (momijagy)
+# ましなもみじ
 
 広島大学学生情報の森「もみじ」が多少マシになる拡張機能です。
 
@@ -21,8 +21,8 @@ node.js 12 以降
 ### セットアップ
 
 ```bash
-git clone git@github.com:plageoj/momijagy.git
-cd momijagy
+git clone git@github.com:plageoj/mashina-momiji.git
+cd mashina-momiji
 npm install
 ```
 
@@ -52,4 +52,3 @@ npm run dev
 ```
 
 拡張機能ページにあるリロードボタンを押し、もみじのサイトを再読み込みすると拡張機能の変更が反映されます。
-
